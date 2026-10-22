@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#14202d"><meta name="referrer" content="no-referrer"><title>Cash — SHIRFIT</title><style>
+#ch-root [hidden]{display:none!important}#ch-root .ch-befores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#ch-root .ch-befores img{width:100%;display:block}#ch-root .ch-app{--ch-bg:#14202d;--ch-panel:#202e3e;--ch-text:#f2f3f5;--ch-muted:#bbc6d2;--ch-line:#415166;--ch-accent:#e6bd72;--ch-on:#251e12;--ch-good:#91d0ad;background:var(--ch-bg);color:var(--ch-text);padding:22px;border-radius:20px;font:14px/1.5 system-ui;max-width:660px;margin:auto;box-sizing:border-box}
+#ch-root .ch-app.light{--ch-bg:#faf7f0;--ch-panel:#fffdf8;--ch-text:#302a23;--ch-muted:#6e6358;--ch-line:#d9d0c1;--ch-accent:#815d26;--ch-on:#fffdf8;--ch-good:#376249}
+#ch-root .ch-app header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}#ch-root .ch-app header small{letter-spacing:2px}#ch-root .ch-app h2{font-size:35px;line-height:1;margin:6px 0}#ch-root .ch-app h2 span{color:var(--ch-accent)}#ch-root .ch-period{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 0}#ch-root .ch-app small{display:block;color:var(--ch-muted);font-size:12px}#ch-root .ch-app h3{font-size:16px;margin:22px 0 10px}
+#ch-root .ch-app button,#ch-root .ch-app input,#ch-root .ch-app select{font:inherit;color:var(--ch-text);background:var(--ch-panel);border:1px solid var(--ch-line);border-radius:10px;padding:10px;min-height:44px;box-sizing:border-box}#ch-root .ch-app button:active{transform:scale(.98)}#ch-root .ch-main-nav,#ch-root .ch-subnav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:10px 0}#ch-root .ch-app button[aria-pressed=true]{background:var(--ch-accent);color:var(--ch-on);border-color:var(--ch-accent)}#ch-root .ch-subnav button{background:transparent;border-color:transparent}#ch-root .ch-subnav button[aria-pressed=true]{background:var(--ch-panel);color:var(--ch-text);border-color:var(--ch-line)}
+#ch-root .ch-hero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}#ch-root .ch-hero>div{background:var(--ch-panel);border-radius:14px;padding:16px;min-width:0}#ch-root .ch-hero span{display:block;color:var(--ch-muted);font-size:12px}#ch-root .ch-hero b{display:block;font-size:25px;letter-spacing:-.6px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}#ch-root #ch-fact{color:var(--ch-good)}#ch-root .ch-app button.ch-text{padding:4px 0;color:var(--ch-accent);background:none;border:0;font-size:12px;min-height:38px}
+#ch-root .ch-track{height:7px;background:var(--ch-line);border-radius:6px;overflow:hidden}#ch-root #ch-progress{height:100%;width:29.05856%;background:var(--ch-good);transition:width 240ms ease-out}#ch-root .ch-between{display:flex;justify-content:space-between;gap:14px;padding:8px 0}#ch-root .ch-between b{font-variant-numeric:tabular-nums;white-space:nowrap}#ch-root .ch-note{font-size:12px;color:var(--ch-muted);flex-wrap:wrap}#ch-root .ch-sources{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}#ch-root .ch-sources article{background:var(--ch-panel);border-radius:12px;padding:12px;min-width:0}#ch-root .ch-sources span{font-size:12px}#ch-root .ch-sources b{display:block;font-size:17px;margin:5px 0;overflow-wrap:anywhere}#ch-root .ch-sources small{font-size:11px}
+#ch-root .ch-counts{padding:10px 0;color:var(--ch-muted);font-size:12px}#ch-root .ch-calculation{margin-top:20px;padding:4px 0 14px;border-top:1px solid var(--ch-line);border-bottom:1px solid var(--ch-line)}#ch-root .ch-detail{border-bottom:1px solid var(--ch-line);padding-bottom:10px;margin-top:10px}#ch-root summary{min-height:24px;padding:12px 0}#ch-root .ch-app .ch-primary{background:var(--ch-accent);color:var(--ch-on);border-color:var(--ch-accent);width:100%;margin:18px 0 8px}#ch-root .ch-sync{margin-top:10px}#ch-root .ch-app label{display:block;margin:14px 0}#ch-root .ch-app label input,#ch-root .ch-app label select{display:block;width:100%;margin-top:6px;font-size:16px}#ch-root .ch-manual-preview{background:var(--ch-panel);padding:14px;border-radius:10px;font-size:17px;font-variant-numeric:tabular-nums}#ch-root .ch-error{color:var(--ch-text)}#ch-root #ch-list article{border-bottom:1px solid var(--ch-line);padding:14px 0}#ch-root #ch-list strong{display:block}#ch-root #ch-notice{font-size:12px;color:var(--ch-muted)}
+@media(max-width:500px){#ch-root .ch-app{padding:16px}#ch-root .ch-main-nav button,#ch-root .ch-subnav button{font-size:12px;padding:8px 4px}#ch-root .ch-hero{gap:8px}#ch-root .ch-hero>div{padding:12px}#ch-root .ch-hero b{font-size:22px}#ch-root .ch-sources{grid-template-columns:1fr}#ch-root .ch-sources article{display:grid;grid-template-columns:1fr auto;gap:3px 10px}#ch-root .ch-sources small{grid-column:1/-1}#ch-root .ch-sources b{margin:0}#ch-root .ch-befores{grid-template-columns:1fr;max-width:390px;margin:auto}}
+@media(prefers-reduced-motion:reduce){#ch-root #ch-progress{transition:none}#ch-root .ch-app button:active{transform:none}}
+
+
+#ch-root .ch-app{--ch-app-fill:#203a58;--ch-app-line:#5680ae;--ch-app-ink:#b5d5ff;--ch-coach-fill:#403624;--ch-coach-line:#977a43;--ch-coach-ink:#f1d59d;--ch-extra-fill:#342b49;--ch-extra-line:#8b73b2;--ch-extra-ink:#deccff}
+#ch-root .ch-app.light{--ch-app-fill:#edf3fc;--ch-app-line:#91b1d9;--ch-app-ink:#315f99;--ch-coach-fill:#fbf0d9;--ch-coach-line:#bd9a56;--ch-coach-ink:#795520;--ch-extra-fill:#f4edfc;--ch-extra-line:#b09aca;--ch-extra-ink:#70499c}
+#ch-root .ch-subnav{grid-template-columns:repeat(3,minmax(0,1fr))}
+#ch-root .ch-sources article[data-source=app],#ch-root #ch-list article[data-source=app]{background:var(--ch-app-fill);border:1px solid var(--ch-app-line)}
+#ch-root .ch-sources article[data-source=coach],#ch-root #ch-list article[data-source=coach]{background:var(--ch-coach-fill);border:1px solid var(--ch-coach-line)}
+#ch-root .ch-sources article[data-source=extra],#ch-root #ch-list article[data-source=extra]{background:var(--ch-extra-fill);border:1px solid var(--ch-extra-line)}
+#ch-root .ch-sources article[data-source=app] b,#ch-root #ch-list article[data-source=app]>strong{color:var(--ch-app-ink)}
+#ch-root .ch-sources article[data-source=coach] b,#ch-root #ch-list article[data-source=coach]>strong{color:var(--ch-coach-ink)}
+#ch-root .ch-sources article[data-source=extra] b,#ch-root #ch-list article[data-source=extra]>strong{color:var(--ch-extra-ink)}
+#ch-root #ch-list article{padding:14px;margin-bottom:10px;border-radius:12px}
+#ch-root .ch-payment-amounts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}#ch-root .ch-payment-amounts b{font-size:17px;font-variant-numeric:tabular-nums}#ch-root .ch-payment-amounts>div:last-child{text-align:right}
+#ch-root .ch-gross-amount{color:var(--ch-accent)}#ch-root .ch-net-amount,#ch-root #ch-net{color:var(--ch-good)}
+#ch-root .ch-type-total{display:flex;gap:12px;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--ch-line)}#ch-root .ch-type-total>div{text-align:right}#ch-root .ch-type-total span,#ch-root .ch-type-total b{display:block;font-size:12px}#ch-root .ch-bottom-total{margin-top:18px;padding:16px;background:var(--ch-panel);border-radius:14px}#ch-root .ch-bottom-total>b{display:block;font-size:28px;color:var(--ch-good);font-variant-numeric:tabular-nums}
+
+#ch-root .ch-payment-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}#ch-root .ch-payment-actions button{min-height:44px;font-size:12px}#ch-root .ch-storage-note{margin-top:22px}#ch-root .ch-period input{max-width:190px}#ch-root .ch-app .ch-error{color:#ffb4ab}#ch-root .ch-app.light .ch-error{color:#a12220}#ch-root #ch-notice{white-space:pre-wrap;overflow-wrap:anywhere}#ch-root .ch-app label input[type=checkbox]{display:inline-block;width:18px;min-height:18px;margin-right:8px}#ch-root .ch-app{min-height:80vh}body{margin:0;padding:16px;background:#101822;font-family:system-ui}#ch-root{max-width:700px;margin:auto}#ch-root .ch-app button:focus-visible,#ch-root .ch-app input:focus-visible,#ch-root .ch-app select:focus-visible{outline:3px solid var(--ch-good);outline-offset:3px}
+#ch-root .ch-app{--ch-extra-fill:#1c3b32;--ch-extra-line:#507d66;--ch-extra-ink:#b1ddc4}
+#ch-root .ch-app.light{--ch-extra-fill:#edf5ee;--ch-extra-line:#a3c1aa;--ch-extra-ink:#315f42}
+#ch-root .ch-app header{margin-bottom:6px}
+#ch-root .ch-app h2{font-size:27px}
+#ch-root .ch-hero{gap:8px;margin:10px 0}
+#ch-root .ch-hero>div{padding:10px 12px}
+#ch-root .ch-hero b{font-size:20px;letter-spacing:-.3px}
+#ch-root .ch-app h3{margin:14px 0 8px;font-size:15px}
+#ch-root .ch-between{padding:4px 0}
+#ch-root .ch-calculation{margin-top:12px;padding-bottom:10px}
+#ch-root .ch-sources{grid-template-columns:1fr;gap:5px}
+#ch-root .ch-sources article{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;padding:7px 10px;align-items:center;border-radius:9px}
+#ch-root .ch-sources article b{font-size:15px;margin:0}
+#ch-root .ch-sources article small{display:none}
+#ch-root .ch-counts{padding:5px 0 8px}
+#ch-root #ch-list .ch-payment{border-radius:9px;margin:0 0 6px;min-width:0}
+#ch-root #ch-list .ch-payment[data-source=app]{background:var(--ch-app-fill);border:1px solid var(--ch-app-line)}
+#ch-root #ch-list .ch-payment[data-source=coach]{background:var(--ch-coach-fill);border:1px solid var(--ch-coach-line)}
+#ch-root #ch-list .ch-payment[data-source=extra]{background:var(--ch-extra-fill);border:1px solid var(--ch-extra-line)}
+#ch-root .ch-payment summary{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;min-height:58px;padding:8px 10px;box-sizing:border-box;list-style:none}
+#ch-root .ch-payment summary::-webkit-details-marker{display:none}
+#ch-root .ch-payment summary strong{display:block;font-size:13px;font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+#ch-root .ch-payment summary small{font-size:11px;margin-top:3px}
+#ch-root .ch-payment-copy{min-width:0}
+#ch-root .ch-payment-value{text-align:right;white-space:nowrap}
+#ch-root .ch-payment-value b{font-size:15px;font-variant-numeric:tabular-nums;font-weight:600}
+#ch-root .ch-payment-body{padding:0 10px 10px;border-top:1px solid var(--ch-line)}
+#ch-root .ch-payment-body .ch-payment-amounts{margin:8px 0;gap:8px}
+#ch-root .ch-payment-body .ch-payment-amounts b{font-size:14px}
+#ch-root .ch-payment-body p{margin:6px 0;font-size:12px;overflow-wrap:anywhere}
+#ch-root .ch-payment[open] summary{border-bottom:0}
+#ch-root .ch-payment[open] .ch-payment-value small{color:var(--ch-text)}
+#ch-root .ch-payment[data-source=app] summary strong{color:var(--ch-app-ink)}
+#ch-root .ch-payment[data-source=coach] summary strong{color:var(--ch-coach-ink)}
+#ch-root .ch-payment[data-source=extra] summary strong{color:var(--ch-extra-ink)}
+#ch-root .ch-type-total{padding:8px 0}
+#ch-root .ch-bottom-total{margin-top:12px;padding:10px 12px}
+#ch-root .ch-bottom-total>b{font-size:21px}
+#ch-root .ch-goal-status{margin:8px 0;font-size:13px;white-space:pre-wrap}
+@media(max-width:500px){#ch-root .ch-app{padding:12px}#ch-root .ch-hero>div{padding:10px}#ch-root .ch-hero b{font-size:19px}body{padding:8px}#ch-root .ch-period{padding:7px 0}#ch-root .ch-app .ch-primary{margin:12px 0 6px}}
+</style></head><body><p style="color:#d3dddf;text-align:center;font:13px system-ui">Макет · вымышленные суммы · записи на сервер не отправляются</p><script>(()=>{const map=new Map();window.cashPreviewStorage={get length(){return map.size},key:i=>[...map.keys()][i]||null,getItem:k=>map.get(k)||null,setItem:(k,v)=>map.set(k,String(v)),removeItem:k=>map.delete(k)};let db={"schemaVersion": 7, "settings": {"theme": "dark", "manualFeeKind": "none"}, "months": {"2026-10": {"y": 2026, "m": 10, "p": [{"id": "demo-1", "t": "app-monthly", "a": 1499, "d": "2026-10-22"}, {"id": "demo-2", "t": "extra", "a": 5000, "d": "2026-10-21", "nc": true}, {"id": "demo-3", "t": "app-renewal", "a": 1499, "d": "2026-10-20"}, {"id": "demo-4", "t": "coaching-month", "a": 40000, "d": "2026-10-19", "nc": true}], "incomeGoal": {"amount": 500000, "basis": "net"}}}},revision=1;window.fetch=async(path,options={})=>{if(options.method==='POST'&&path==='/api/cash/commit'){const p=JSON.parse(options.body);db=p.db;revision++;}return {ok:true,status:200,json:async()=>({db,revision,csrf_token:'synthetic-preview',backup_status:'pending'})};};})();</script><div id="ch-root">
+ <div class="ch-app" aria-label="Cash — учёт доходов">
+  <section class="ch-calculation" aria-label="Состояние сохранения"><p id="ch-connection" role="status" aria-live="polite">Загружаем журнал с сервера…</p><a id="ch-login" href="/login" hidden>Войти в Cash</a><button id="ch-reload-sync" type="button">Обновить журнал</button><button id="ch-retry-sync" type="button" hidden>Повторить отправку</button><section id="ch-recovery" hidden><p>Найдены неотправленные черновики с этого устройства.</p><select id="ch-recovery-select" aria-label="Черновик для восстановления"></select><button id="ch-recovery-resume" type="button">Открыть выбранный черновик</button><button id="ch-recovery-export" type="button">Экспортировать все черновики</button></section><button id="ch-use-server" type="button" hidden>Загрузить серверную версию</button><button id="ch-draft-export" type="button" hidden>Экспортировать неотправленный черновик</button></section><div id="ch-workspace" hidden>
+  <header><div><small>SHIRFIT</small><h2>cash<span>.</span></h2></div><button id="ch-theme" aria-label="Сменить тему">◐</button></header>
+  <div class="ch-period"><span id="ch-current-period">Текущий месяц</span><input id="ch-month-picker" type="month" aria-label="Месяц учёта"></div>
+  <section id="ch-month">
+   <div class="ch-subnav" aria-label="Данные месяца"><button data-sub="income" aria-pressed="true">💰 Доход</button><button data-sub="goals">🎯 Цели</button><button data-sub="settings">⚙️ Настройки</button></div>
+   <section id="ch-income">
+    <div class="ch-hero"><div><span id="ch-plan-label">Цель после комиссии</span><b id="ch-plan">—</b><button class="ch-text" id="ch-edit-goal">Изменить цель</button></div><div><span id="ch-fact-label">Факт после комиссии</span><b id="ch-fact">—</b><small>Налоги и расходы не вычтены</small></div></div>
+    <div class="ch-track" role="progressbar" aria-label="Выполнение цели" aria-valuemin="0" aria-valuemax="100" aria-valuenow="29.1"><div id="ch-progress"></div></div><div class="ch-between ch-note"><span id="ch-percent">Выполнено —</span><span id="ch-left">Осталось —</span></div>
+    <h3>Источники дохода</h3><small>Суммы после комиссии</small><div class="ch-sources"><article data-source="app"><span>📱 Приложение</span><b id="ch-app-net">—</b><small>Комиссия 3,8% автоматически</small></article><article data-source="coach"><span>👤 Личное ведение</span><b id="ch-coach-net">—</b><small>Комиссия выбрана вручную</small></article><article data-source="extra"><span>＋ Другие доходы</span><b id="ch-extra-net">—</b><small>Свои записи и выбранная комиссия</small></article></div>
+    <section class="ch-calculation" aria-label="Расчёт дохода"><h3>Расчёт дохода</h3><div class="ch-between"><span>До комиссии</span><b id="ch-gross">—</b></div><div class="ch-between"><span>Комиссии</span><b id="ch-fee">—</b></div><div class="ch-between"><span>После комиссии</span><b id="ch-net">—</b></div><small>У приложения — 3,8%. У своих доходов — выбранная комиссия.</small></section>
+    <button class="ch-primary" id="ch-add">＋ Добавить свой доход</button>
+    <h3>Оплаты за месяц</h3><div id="ch-payment-counts" class="ch-counts"></div><div id="ch-list"></div><h3>Итог по типам оплат</h3><div id="ch-breakdown"></div><div class="ch-bottom-total"><span>Итого после комиссии</span><b id="ch-bottom-net">—</b><small>До налогов и расходов</small></div><small class="ch-sync">Автоплатежи SHIRFIT пока не подключены. Здесь показан сохранённый журнал.</small>
+   </section>
+   <section id="ch-goals" hidden><h3>🎯 Цель по доходу</h3><form id="ch-goal-form"><label>Сумма на месяц, ₽<input id="ch-goal-input" type="text" inputmode="decimal" autocomplete="off" placeholder="500 000" value="200000" required></label><label>Как считать цель<select id="ch-basis"><option value="net">После комиссии</option><option value="gross">До комиссии</option></select></label><small>План и факт сравниваются на одной основе.</small><button class="ch-primary" type="submit">Сохранить цель</button></form><details class="ch-detail"><summary>Планы по продажам · дополнительно</summary><p>Годовые, месячные, продления, личное ведение и другие доходы сохраняются как отдельные планы.</p><div><form id="ch-quantity-form"><div id="ch-quantity-inputs"></div><p id="ch-quantity-total"></p><button type="submit">Сохранить планы продаж</button><button type="button" id="ch-use-quantity-goal">Сделать суммарной целью</button></form></div></details></section>
+   <section id="ch-settings" hidden><section class="ch-calculation"><h3>Мои данные</h3><button id="ch-export">Экспортировать JSON</button><label>Импортировать JSON<input id="ch-import-file" type="file" accept="application/json,.json"></label><label><input id="ch-import-replace" type="checkbox"> Заменить текущий учёт файлом</label><small>Перед импортом сохраняется резервная копия. Обычный импорт объединяет записи по ID; конфликт не перезаписывает данные.</small><button id="ch-restore-backup">Восстановить копию до импорта</button></section><h3>⚙️ Настройки</h3><p><a href="/settings/github">Подключение закрытого GitHub</a></p><button id="ch-logout" type="button">Выйти из Cash</button><label>Оформление<select id="ch-theme-setting"><option value="dark">Тёмное</option><option value="light">Светлое</option></select></label><section class="ch-calculation"><h3>Оплаты приложения</h3><div class="ch-between"><span>Комиссия автоматически</span><b>3,8%</b></div><small>Ставка применяется к оплатам приложения, не ко всем твоим доходам.</small></section><label>Комиссия для новых ручных записей<select id="ch-manual-default"><option value="none">Без комиссии</option><option value="app">3,8%</option></select></label><small>При добавлении можно выбрать свой процент или сумму. Уже добавленные записи не меняются.</small><section class="ch-calculation"><h3>Связь с SHIRFIT</h3><div class="ch-between"><span>Автоплатежи</span><b>Пока не подключены</b></div><small>Автоматический источник ещё не подключён. Не вноси одну оплату повторно из разных источников.</small></section></section>
+  </section>
+  <section id="ch-manual" hidden><button id="ch-manual-back">‹ Назад к месяцу</button><h3>Добавить свой доход</h3><form id="ch-manual-form"><label>За что<select id="ch-kind"><option value="coaching-month">Личное ведение · месяц</option><option value="coaching-3month">Личное ведение · 3 месяца</option><option value="consult">Консультация</option><option value="extra">Другой доход</option></select></label><label>Дата<input id="ch-date" type="date" required></label><label>Стоимость, ₽<input id="ch-amount" type="text" inputmode="decimal" autocomplete="off" placeholder="5 000" value="" required></label><label>Комиссия<select id="ch-fee-kind"><option value="none">Без комиссии</option><option value="app">3,8%</option><option value="percent">Свой процент</option><option value="amount">Сумма в рублях</option></select></label><label id="ch-custom-wrap" hidden>Размер комиссии<input id="ch-custom-fee" type="number" min="0" step="0.01" value="0"></label><label>Примечание<input id="ch-note" type="text" maxlength="120" placeholder="Например, ведение за октябрь"></label><div class="ch-manual-preview" id="ch-preview" aria-live="polite">Введи сумму</div><p class="ch-error" id="ch-error" role="alert"></p><button class="ch-primary" type="submit">Сохранить доход</button><small>Запись сохраняется на сервере после подтверждения. Экспорт сохраняет отдельную копию.</small></form></section>
+  <section id="ch-import-preview" hidden><h3>Предпросмотр импорта</h3><p id="ch-import-summary"></p><button id="ch-import-confirm" class="ch-primary">Применить импорт</button><button id="ch-import-cancel">Отмена</button></section></div><p id="ch-notice" role="status" aria-live="polite"></p><button id="ch-undo" hidden>Вернуть удалённую запись</button><small class="ch-storage-note">Журнал хранится на защищённом сервере. Статус копии GitHub показан сверху.</small>
+ </div>
+</div><script>(function (root, factory) {
+  'use strict';
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.CashCore = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+  const own = (v, k) => Object.prototype.hasOwnProperty.call(v, k);
+  const object = v => v !== null && typeof v === 'object' && !Array.isArray(v);
+  const fail = message => { throw new Error(message); };
+  function clone(v) {
+    const seen = new Set();
+    function check(x) {
+      if (x === null || typeof x === 'string' || typeof x === 'boolean') return;
+      if (typeof x === 'number' && Number.isFinite(x)) return;
+      if (typeof x !== 'object' || seen.has(x)) fail('Ожидаются конечные JSON-данные');
+      seen.add(x);
+      if (!Array.isArray(x) && !object(x)) fail('Неверный объект');
+      for (const k of Object.keys(x)) {
+        if (['__proto__', 'constructor', 'prototype'].includes(k)) fail('Недопустимое имя поля');
+        check(x[k]);
+      }
+      seen.delete(x);
+    }
+    check(v);
+    return JSON.parse(JSON.stringify(v));
+  }
+  function stable(v) {
+    if (Array.isArray(v)) return '[' + v.map(stable).join(',') + ']';
+    if (object(v)) return '{' + Object.keys(v).sort().map(k => JSON.stringify(k) + ':' + stable(v[k])).join(',') + '}';
+    return JSON.stringify(v);
+  }
+  function monthKey(s) {
+    if (typeof s !== 'string' || !/^\d{4}-\d{1,2}$/.test(s)) fail('Неверный месяц');
+    const [y, m] = s.split('-').map(Number);
+    if (y < 1 || m < 1 || m > 12) fail('Неверный месяц');
+    return String(y).padStart(4, '0') + '-' + String(m).padStart(2, '0');
+  }
+  function date(s) {
+    if (typeof s !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(s)) fail('Дата должна иметь формат ГГГГ-ММ-ДД');
+    const [y, m, d] = s.split('-').map(Number);
+    const leap = y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0);
+    const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if (y < 1 || m < 1 || m > 12 || d < 1 || d > days[m - 1]) fail('Несуществующая дата');
+    return s;
+  }
+  function moneyMinor(v) {
+    if (typeof v !== 'number' && typeof v !== 'string') fail('Неверная сумма');
+    const s = typeof v === 'string' ? v.trim() : String(v);
+    if (!/^-?\d+(\.\d{1,2})?$/.test(s)) fail('Сумма должна содержать не более двух знаков после запятой');
+    const negative = s.startsWith('-');
+    const [whole, fraction = ''] = s.replace(/^-/, '').split('.');
+    const n = Number(whole) * 100 + Number(fraction.padEnd(2, '0'));
+    if (!Number.isSafeInteger(n)) fail('Слишком большая сумма');
+    return negative ? -n : n;
+  }
+  const appType = p => typeof p.t === 'string' && p.t.startsWith('app-');
+  function explicitFee(f, amount) {
+    if (!object(f) || !['none', 'percent', 'amount'].includes(f.kind)) fail('Неверная комиссия');
+    if (f.kind === 'none') {
+      if (f.value !== undefined && Number(f.value) !== 0) fail('Неверная комиссия');
+      return 0;
+    }
+    if (f.kind === 'amount') {
+      const n = moneyMinor(f.value);
+      if (n < 0 || n > amount) fail('Комиссия превышает сумму');
+      return n;
+    }
+    if ((typeof f.value !== 'number' && typeof f.value !== 'string') || String(f.value).trim() === '') fail('Неверный процент');
+    const v = Number(f.value);
+    if (!Number.isFinite(v) || v < 0 || v > 100) fail('Неверный процент');
+    return Math.round(amount * v / 100);
+  }
+  function feeMinor(p) {
+    const amount = moneyMinor(p.a);
+    if (amount <= 0) fail('Сумма должна быть положительной');
+    if (appType(p)) return Math.round(amount * 38 / 1000);
+    if (p.fee !== undefined) return explicitFee(p.fee, amount);
+    return p.nc === true ? 0 : Math.round(amount * 38 / 1000);
+  }
+  function record(p, key) {
+    if (!object(p) || typeof p.t !== 'string' || !p.t.trim() || ['__proto__', 'constructor', 'prototype'].includes(p.t)) fail('Не указан тип записи');
+    if (date(p.d).slice(0, 7) !== key) fail('Дата записи не соответствует месяцу');
+    if (moneyMinor(p.a) <= 0) fail('Сумма должна быть положительной');
+    if (p.id !== undefined && !((typeof p.id === 'string' && p.id.length > 0) || (typeof p.id === 'number' && Number.isSafeInteger(p.id)))) fail('Неверный ID записи');
+    if (p.nc !== undefined && typeof p.nc !== 'boolean') fail('Неверное поле nc');
+    if (p.n !== undefined && typeof p.n !== 'string') fail('Неверное примечание');
+    if (p.fee !== undefined) explicitFee(p.fee, moneyMinor(p.a));
+    feeMinor(p);
+  }
+  function emptyDB() { return {schemaVersion: 7, months: {}, settings: {theme: 'dark', manualFeeKind: 'none'}}; }
+  function rawDB(input) {
+    const d = clone(input);
+    if (!object(d) || !object(d.months) || (d.schemaVersion !== undefined && d.schemaVersion !== 7)) fail('Неверный формат базы');
+    if (d.settings !== undefined && !object(d.settings)) fail('Неверные настройки');
+    return d;
+  }
+  function idKey(id) { return String(id); }
+  function normalize(input) {
+    const d = rawDB(input), result = {...d, schemaVersion: 7, months: {}, settings: {...emptyDB().settings, ...(d.settings || {})}}, ids = new Set();
+    for (const [rawKey, m] of Object.entries(d.months)) {
+      const key = monthKey(rawKey);
+      if (!object(m) || !Array.isArray(m.p)) fail('Неверный месяц базы');
+      if (m.y !== undefined && m.y !== Number(key.slice(0, 4))) fail('Год месяца не соответствует ключу');
+      if (m.m !== undefined && m.m !== Number(key.slice(5))) fail('Номер месяца не соответствует ключу');
+      if (own(result.months, key)) fail('Повторяющийся месяц');
+      for (const p of m.p) {
+        record(p, key);
+        if (p.id !== undefined) {
+          const id = idKey(p.id);
+          if (ids.has(id)) fail('Повторяющийся ID записи');
+          ids.add(id);
+        }
+      }
+      result.months[key] = m;
+      goalFor(result, key);
+    }
+    return result;
+  }
+  function migrateYear2026(input) {
+    const d = rawDB(input), out = {...d, months: {}}, report = {bucketYearsChanged: 0, monthYearsChanged: 0, recordYearsChanged: 0, recordsMoved: 0, records: 0, duplicateRecordsSkipped: 0};
+    // Metadata follows its original month; payments follow their explicit calendar date.
+    const pending = [];
+    for (const [rawKey, m] of Object.entries(d.months)) {
+      const oldKey = monthKey(rawKey), key = oldKey.startsWith('2025-') ? '2026' + oldKey.slice(4) : oldKey;
+      if (!object(m) || !Array.isArray(m.p)) fail('Неверный месяц базы');
+      if (m.y !== undefined && m.y !== Number(oldKey.slice(0, 4))) fail('Год месяца не соответствует исходному ключу');
+      if (m.m !== undefined && m.m !== Number(oldKey.slice(5))) fail('Номер месяца не соответствует исходному ключу');
+      report.bucketYearsChanged += Number(key !== oldKey);
+      const meta = {...m, p: []};
+      if (meta.y === 2025) { meta.y = 2026; report.monthYearsChanged++; }
+      if (own(out.months, key) && stable({...out.months[key], p: []}) !== stable(meta)) fail('Конфликт метаданных месяцев при переносе года');
+      if (!own(out.months, key)) out.months[key] = meta;
+      for (const p of m.p) {
+        date(p.d);
+        if (p.d.startsWith('2025-')) { p.d = '2026' + p.d.slice(4); report.recordYearsChanged++; }
+        const dest = p.d.slice(0, 7);
+        report.recordsMoved += Number(dest !== key);
+        pending.push([dest, p]);
+      }
+    }
+    const ids = new Map();
+    for (const [key, p] of pending) {
+      record(p, key);
+      if (p.id !== undefined) {
+        const id = idKey(p.id), fingerprint = stable(p);
+        if (ids.has(id)) {
+          if (ids.get(id) !== fingerprint) fail('Конфликт ID записи при переносе года');
+          report.duplicateRecordsSkipped++;
+          continue;
+        }
+        ids.set(id, fingerprint);
+      }
+      if (!own(out.months, key)) out.months[key] = {y: Number(key.slice(0, 4)), m: Number(key.slice(5)), p: []};
+      out.months[key].p.push(p); report.records++;
+    }
+    return {data: normalize(out), report};
+  }
+  function payments(db, key) {
+    if (key !== undefined && key !== null && key !== '') return db.months[monthKey(key)]?.p || [];
+    return Object.values(db.months).flatMap(m => m.p);
+  }
+  function summarize(list) {
+    const r = {grossMinor: 0, feeMinor: 0, netMinor: 0, count: 0, appCount: 0, manualCount: 0, byKind: {}};
+    for (const p of list) {
+      if (!object(p) || typeof p.t !== 'string' || ['__proto__', 'constructor', 'prototype'].includes(p.t)) fail('Неверный тип записи');
+      const gross = moneyMinor(p.a), fee = feeMinor(p);
+      r.grossMinor += gross; r.feeMinor += fee; r.count++; r[appType(p) ? 'appCount' : 'manualCount']++;
+      const k = r.byKind[p.t] || (r.byKind[p.t] = {count: 0, grossMinor: 0, feeMinor: 0, netMinor: 0});
+      k.count++; k.grossMinor += gross; k.feeMinor += fee; k.netMinor += gross - fee;
+      if (![r.grossMinor, r.feeMinor].every(Number.isSafeInteger)) fail('Итог превышает точность расчёта');
+    }
+    r.netMinor = r.grossMinor - r.feeMinor;
+    return r;
+  }
+  function createPayment(input, id) {
+    if (!object(input) || typeof input.type !== 'string' || !input.type.trim() || input.type.startsWith('app-')) fail('Вручную можно добавить только ручной доход');
+    const kind = input.feeKind || 'none';
+    const p = {id, t: input.type, a: moneyMinor(input.amount) / 100, d: date(input.date), n: input.n === undefined ? '' : input.n, source: 'manual', fee: {kind, value: kind === 'none' ? 0 : input.feeValue}};
+    if (id === undefined) fail('Не указан ID записи');
+    record(p, p.d.slice(0, 7));
+    p.fee.value = Number(p.fee.value);
+    return p;
+  }
+  function goalFor(db, key) {
+    const m = db.months[monthKey(key)];
+    if (!m) return {amount: 0, amountMinor: 0, basis: 'gross', source: 'legacy'};
+    if (m.incomeGoal !== undefined) {
+      const g = m.incomeGoal;
+      if (!object(g) || !['net', 'gross'].includes(g.basis) || moneyMinor(g.amount) < 0) fail('Неверная денежная цель');
+      return {amount: Number(g.amount), amountMinor: moneyMinor(g.amount), basis: g.basis, source: 'incomeGoal'};
+    }
+    const g = m.g || {}, prices = {annual: 6999, mapp: 1499, ren: 1499, cm: 40000, c3: 90000, extra: 1};
+    if (!object(g)) fail('Неверный план');
+    let amountMinor = 0;
+    for (const [k, price] of Object.entries(prices)) {
+      const v = g[k] === undefined ? 0 : g[k];
+      if (typeof v !== 'number' || !Number.isFinite(v) || v < 0 || (k !== 'extra' && !Number.isInteger(v))) fail('Неверный план');
+      amountMinor += k === 'extra' ? moneyMinor(v) : v * price * 100;
+    }
+    if (!Number.isSafeInteger(amountMinor)) fail('Цель превышает точность расчёта');
+    return {amount: amountMinor / 100, amountMinor, basis: 'gross', source: 'legacy'};
+  }
+  // A full canonical record is encoded into generated IDs: deterministic and collision-free.
+  function assignMissingIDs(db) {
+    const occurrences = new Map();
+    for (const [key, m] of Object.entries(db.months)) for (const p of m.p) {
+      if (p.id !== undefined) continue;
+      const canonical = key + ':' + stable(p), count = (occurrences.get(canonical) || 0) + 1;
+      occurrences.set(canonical, count);
+      p.id = 'legacy:' + encodeURIComponent(canonical) + ':' + count;
+    }
+    return db;
+  }
+  function mergeImport(current, incoming) {
+    const data = assignMissingIDs(normalize(current)), raw = rawDB(incoming), inputIDs = new Map();
+    let inputDuplicateCount = 0, inputCount = 0;
+    for (const [key, m] of Object.entries(raw.months)) {
+      if (!object(m) || !Array.isArray(m.p)) fail('Неверный месяц базы');
+      m.p = m.p.filter(p => {
+        record(p, monthKey(key)); inputCount++;
+        if (p.id === undefined) return true;
+        const id = idKey(p.id), fingerprint = stable(p);
+        if (inputIDs.has(id)) {
+          if (inputIDs.get(id) !== fingerprint) fail('Конфликт ID: импорт не выполнен');
+          inputDuplicateCount++; return false;
+        }
+        inputIDs.set(id, fingerprint); return true;
+      });
+    }
+    const next = assignMissingIDs(normalize(raw)), ids = new Map();
+    const report = {before: payments(data).length, incoming: inputCount, added: 0, skipped: inputDuplicateCount, conflicts: 0};
+    for (const p of payments(data)) ids.set(idKey(p.id), stable(p));
+    for (const [key, m] of Object.entries(next.months)) {
+      if (!own(data.months, key)) data.months[key] = {...m, p: []};
+      for (const p of m.p) {
+        const id = idKey(p.id), fingerprint = stable(p);
+        if (ids.has(id)) {
+          if (ids.get(id) !== fingerprint) fail('Конфликт ID: импорт не выполнен');
+          report.skipped++; continue;
+        }
+        ids.set(id, fingerprint); data.months[key].p.push(p); report.added++;
+      }
+    }
+    report.after = payments(data).length;
+    return {data: normalize(data), report};
+  }
+  function amountInputMinor(value) {
+    if (typeof value !== 'string') return moneyMinor(value);
+    let s = value.trim().replace(/[\u00a0\u202f]/g, ' ');
+    if (/^\d{1,3}(?:\.\d{3})+(?:,\d{1,2})?$/.test(s)) s = s.replace(/\./g, '').replace(',', '.');
+    else if (/^\d{1,3}(?: \d{3})+(?:[.,]\d{1,2})?$/.test(s)) s = s.replace(/ /g, '').replace(',', '.');
+    else if (/^\d+(?:[.,]\d{1,2})?$/.test(s)) s = s.replace(',', '.');
+    else fail('Введи сумму, например 500 000 или 500.000. Копейки — через запятую.');
+    return moneyMinor(s);
+  }
+  function formatAmountInput(minor) {
+    if (!Number.isSafeInteger(minor) || minor < 0) fail('Неверная сумма');
+    return (minor / 100).toLocaleString('ru-RU', {maximumFractionDigits: 2}).replace(/[\u00a0\u202f]/g, ' ');
+  }
+  return Object.freeze({emptyDB, normalize, migrateYear2026, moneyMinor, amountInputMinor, formatAmountInput, feeMinor, summarize, payments, createPayment, goalFor, mergeImport});
+});
+</script><script>(function(root){
+'use strict';
+const KEY='shirfit.cash.connected.pending.v1', RECOVERY=KEY+'.request.';
+class CashSync {
+ constructor({fetch:fetcher,storage,uuid,onState=()=>{},timeoutMs=20000}){this.timeoutMs=timeoutMs;this.fetch=fetcher;this.storage=storage;this.uuid=uuid;this.onState=onState;this.revision=null;this.csrf=null;this.db=null;this.pending=null;this.state='loading';this.backupStatus=null;}
+ status(s){this.state=s;this.onState(s);}
+ async request(path,options={}){
+  const controller=typeof AbortController==='function'?new AbortController():null;
+  let timer;
+  const timeout=new Promise((_,reject)=>{timer=setTimeout(()=>{const e=Object.assign(Error(path==='/api/cash/commit'?'Сервер не подтвердил результат за 20 секунд. Изменение могло сохраниться. Черновик остаётся на устройстве; повторная отправка проверит тот же запрос.':options.method==='POST'?'Сервер не подтвердил результат вовремя. Запрос мог выполниться; обнови страницу перед повтором.':'Сервер не ответил вовремя. Обнови журнал или повтори запрос.'),{timeout:true,uncertain:options.method==='POST'});reject(e);if(controller)controller.abort();},this.timeoutMs);});
+  const operation=(async()=>{
+   let response;try{response=await this.fetch(path,{credentials:'same-origin',cache:'no-store',...options,...(controller?{signal:controller.signal}:{})});}catch(_){throw Object.assign(Error(path==='/api/cash/commit'?'Нет связи с сервером. Результат отправки не подтверждён. Черновик сохранён на устройстве; повтори тот же запрос.':'Нет связи с сервером. Обнови журнал после восстановления соединения.'),{offline:true,uncertain:options.method==='POST'});}
+   let body;try{body=await response.json();}catch(_){body={};}
+   if(!response.ok){const e=Error(response.status===401?'Войди в Cash, затем обнови журнал.':response.status===409?'Журнал изменился на сервере. Черновик сохранён. Экспортируй его перед обновлением; автоматическая перезапись запрещена.':body.error||body.detail||'Сервер не подтвердил сохранение.');e.status=response.status;throw e;}
+   return body;
+  })();
+  try{return await Promise.race([operation,timeout]);}finally{clearTimeout(timer);}
+ }
+
+ accept(result){if(!result.db||!Number.isInteger(result.revision)||!result.csrf_token)throw Error('Сервер вернул неполный журнал.');this.db=result.db;this.revision=result.revision;this.csrf=result.csrf_token;this.backupStatus=result.backup_status;}
+ recoveryDrafts(){const drafts=[];for(let i=0;i<this.storage.length;i++){const key=this.storage.key(i);if(key&&key.startsWith(RECOVERY)&&!key.endsWith('.done')&&!this.storage.getItem(key+'.done')){try{drafts.push(JSON.parse(this.storage.getItem(key)));}catch(_){}}}return drafts;}
+ recover(requestID){const raw=this.storage.getItem(RECOVERY+requestID);if(!raw)throw Error('Черновик не найден.');if(this.pending)throw Error('Сначала заверши текущую отправку.');this.pending=JSON.parse(raw);this.storage.setItem(KEY,raw);this.status('pending');}
+ async logout(){await this.request('/api/cash/auth/logout',{method:'POST',headers:{'Content-Type':'application/json','X-Cash-CSRF':this.csrf},body:'{}'});this.db=null;this.csrf=null;this.revision=null;this.status('auth');}
+ async load(){this.status('loading');try{const raw=this.storage.getItem(KEY);this.pending=raw?JSON.parse(raw):null;const result=await this.request('/api/cash/ledger');this.accept(result);if(this.pending){if(!this.pending.request_id||!Number.isInteger(this.pending.revision)||!this.pending.db)throw Error('Не удалось прочитать черновик. Экспортируй его перед очисткой.');await this.retry();}else this.status(this.recoveryDrafts().length?'recovery':'ready');return this.db;}catch(e){this.status(e.status===401?'auth':e.status===409?'conflict':this.pending?'pending':'error');throw e;}}
+ async commit(db,backupBefore=false){if(this.state!=='ready'||this.pending)throw Error('Сначала заверши отправку сохранённого черновика.');if(this.storage.getItem(KEY))throw Error('В другой вкладке есть неотправленный черновик. Обнови журнал перед изменением.');const draft={db,revision:this.revision,request_id:this.uuid(),backup_before:backupBefore};this.storage.setItem(RECOVERY+draft.request_id,JSON.stringify(draft));this.storage.setItem(KEY,JSON.stringify(draft));this.pending=draft;return this.retry();}
+ async retry(){if(!this.pending)throw Error('Черновика для отправки нет.');const raw=this.storage.getItem(KEY);if(raw!==JSON.stringify(this.pending))throw Error('Черновик изменился в другой вкладке. Обнови журнал.');this.status('saving');try{const result=await this.request('/api/cash/commit',{method:'POST',headers:{'Content-Type':'application/json','X-Cash-CSRF':this.csrf},body:JSON.stringify(this.pending)});this.accept(result);this.storage.setItem(RECOVERY+this.pending.request_id+'.done','1');if(this.storage.getItem(KEY)!==raw){const foreign=this.storage.getItem(KEY);this.pending=foreign?JSON.parse(foreign):null;throw Object.assign(Error('Сервер сохранил отправленный журнал, но черновик другой вкладки изменился. Он сохранён; обнови журнал.'),{status:409});}this.storage.removeItem(KEY);this.pending=null;try{this.accept(await this.request('/api/cash/ledger'));this.status(this.recoveryDrafts().length?'recovery':'ready');}catch(_){this.status('refresh');}return this.db;}catch(e){this.status(e.status===401?'auth':e.status===409?'conflict':'pending');throw e;}}
+ async useServerVersion(){if(!this.pending)throw Error('Нет конфликтующего черновика.');const raw=JSON.stringify(this.pending);const result=await this.request('/api/cash/ledger');if(this.storage.getItem(KEY)!==raw)throw Error('Черновик изменился в другой вкладке. Обнови журнал перед продолжением.');this.storage.setItem(KEY+'.conflict-copy',raw);this.storage.setItem(RECOVERY+this.pending.request_id+'.done','discarded-to-conflict-copy');this.accept(result);this.storage.removeItem(KEY);this.pending=null;this.status(this.recoveryDrafts().length?'recovery':'ready');return this.db;}
+ async backup(){return (await this.request('/api/cash/backup')).db;}
+ exportValue(){return this.pending?{cashPendingDraft:true,...this.pending}:this.db;}
+}
+root.CashSync=CashSync;if(typeof module!=='undefined')module.exports={CashSync,KEY};
+})(typeof window!=='undefined'?window:globalThis);
+</script><script>(function () {
+  'use strict';
+  const C = window.CashCore, $ = id => document.getElementById('ch-' + id);
+  let sync;
+  const serverSaved = () => 'Сохранено на сервере. ' + (['uploaded','idempotent','saved'].includes(sync.backupStatus?.status||sync.backupStatus?.github_status||sync.backupStatus) ? 'Копия GitHub подтверждена.' : 'Копия GitHub ожидает подтверждения.');
+  const labels = {'app-monthly':'Месячная подписка','app-annual':'Годовая подписка','app-renewal':'Продление','coaching-month':'Личное ведение · месяц','coaching-3month':'Личное ведение · 3 месяца',consult:'Консультация',extra:'Другой доход'};
+  const planLabels = {annual:'Годовые · шт.',mapp:'Месячные · шт.',ren:'Продления · шт.',cm:'Ведение на месяц · клиентов',c3:'Ведение на 3 месяца · клиентов',extra:'Другие доходы · ₽'};
+  const clone = x => JSON.parse(JSON.stringify(x));
+  const appType = p => p.t.startsWith('app-');
+  const today = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); };
+  const money = n => (n/100).toLocaleString('ru-RU',{minimumFractionDigits:0,maximumFractionDigits:2}) + ' ₽';
+  let db = C.emptyDB(), selected = today().slice(0,7), pending = null, editing = null, dateChosen = false, undo = null;
+  let loaded = false;
+  function notice(text, error) { $('notice').textContent = text; $('notice').classList.toggle('ch-error',!!error); }
+  function withIDs(input){const n=C.normalize(input),r=C.mergeImport(C.emptyDB(),n).data;return {...n,months:r.months};}
+  function preflight(next) {
+    if(!loaded||sync.state!=='ready')throw Error('Журнал ещё не готов к изменениям.');
+    const valid = withIDs(next);
+    C.summarize(C.payments(valid));for(const key of Object.keys(valid.months))C.summarize(C.payments(valid,key));
+    return valid;
+  }
+  async function commit(next,backupBefore=false) {
+    const valid=preflight(next);
+    const result=await sync.commit(valid,backupBefore);
+    db=withIDs(result);render();updateConnection();
+  }
+  function updateConnection(){
+    const state=sync.state,ready=loaded&&state==='ready';
+    $('workspace').hidden=!loaded;
+    $('login').hidden=state!=='auth';
+    $('retry-sync').hidden=!sync.pending||state==='saving'||state==='auth';
+    $('reload-sync').hidden=state==='saving';
+    const titles={recovery:'Найдены черновики другой вкладки. Экспортируй их или выбери для восстановления.',refresh:'Отправка подтверждена сервером. Обнови журнал перед следующим изменением.',loading:'Загружаем журнал с сервера…',saving:'Отправляем на сервер…',ready:serverSaved(),auth:'Войди в Cash для доступа к журналу.',pending:'Изменение ожидает отправки. Черновик сохранён на этом устройстве.',conflict:'Конфликт версий. Черновик сохранён; сначала экспортируй его.',error:'Журнал не загружен. Проверь соединение и обнови.'};
+    $('connection').textContent=titles[state]||state;
+    document.querySelectorAll('#ch-workspace button,#ch-workspace input,#ch-workspace select').forEach(e=>{e.disabled=!ready;});
+    $('undo').disabled=!ready;
+    $('export').disabled=!loaded&&!sync.pending;
+    $('draft-export').hidden=!sync.pending;
+    $('use-server').hidden=state!=='conflict';
+    const recoveries=sync.recoveryDrafts();$('recovery').hidden=!recoveries.length;$('recovery-select').replaceChildren();recoveries.forEach(d=>{const o=element('option','Версия '+d.revision+' · '+d.request_id);o.value=d.request_id;$('recovery-select').append(o);});$('recovery-resume').disabled=!!sync.pending;
+    $('logout').disabled=!loaded||state==='saving';
+  }
+  function ensureMonth(next,key) { return next.months[key] || (next.months[key]={y:Number(key.slice(0,4)),m:Number(key.slice(5)),p:[],g:{},f:{}}); }
+  function rows(key) { return C.payments(db,key || selected).filter(p=>!p.archivedAt); }
+  function category(p) { return appType(p)?'app':p.t.startsWith('coaching-')?'coach':'extra'; }
+  function element(tag,text,cls) { const n=document.createElement(tag); if(text!==undefined)n.textContent=text; if(cls)n.className=cls; return n; }
+  function sub(name) { ['income','goals','settings'].forEach(id=>$(id).hidden=id!==name); document.querySelectorAll('[data-sub]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sub===name))); }
+  function formVisible(on) { $('manual').hidden=!on; $('month').hidden=on; }
+  function applyTheme() { document.querySelector('.ch-app').classList.toggle('light',db.settings.theme==='light'); $('theme-setting').value=db.settings.theme==='light'?'light':'dark'; $('manual-default').value=db.settings.manualFeeKind==='app'?'app':'none'; }
+  function render() {
+    const pp=rows(), total=C.summarize(pp), goal=C.goalFor(db,selected), fact=goal.basis==='net'?total.netMinor:total.grossMinor;
+    $('current-period').textContent=new Date(selected+'-01T12:00:00').toLocaleDateString('ru-RU',{month:'long',year:'numeric'});
+    $('month-picker').value=selected;
+    $('plan-label').textContent=goal.basis==='net'?'Цель после комиссии':'Цель до комиссии';
+    $('fact-label').textContent=goal.basis==='net'?'Факт после комиссии':'Факт до комиссии';
+    $('plan').textContent=goal.amountMinor>0?money(goal.amountMinor):'Не задана'; $('fact').textContent=money(fact);
+    const ratio=goal.amountMinor>0?fact/goal.amountMinor*100:0;
+    $('progress').style.width=Math.min(ratio,100)+'%'; document.querySelector('.ch-track').setAttribute('aria-valuenow',String(Math.min(ratio,100)));
+    $('percent').textContent=goal.amountMinor>0?'Выполнено '+ratio.toLocaleString('ru-RU',{maximumFractionDigits:1})+'%':'Задай цель в рублях';
+    $('left').textContent=goal.amountMinor>0?(fact>=goal.amountMinor?'Сверх цели '+money(fact-goal.amountMinor):'Осталось '+money(goal.amountMinor-fact)):'';
+    $('gross').textContent=money(total.grossMinor); $('fee').textContent=money(total.feeMinor); $('net').textContent=money(total.netMinor); $('bottom-net').textContent=money(total.netMinor);
+    for(const kind of ['app','coach','extra']) $(kind+'-net').textContent=money(C.summarize(pp.filter(p=>category(p)===kind)).netMinor);
+    $('payment-counts').textContent='Всего '+total.count+' · Приложение '+total.appCount+' · Свои доходы '+total.manualCount;
+    $('list').replaceChildren();
+    if(!pp.length)$('list').append(element('p','За этот месяц пока нет оплат. Можно добавить доход или импортировать свой журнал в настройках.'));
+    [...pp].sort((a,b)=>b.d.localeCompare(a.d)).forEach(p=>{
+      const article=element('details',undefined,'ch-payment'); article.dataset.source=category(p);
+      const title=element('strong',labels[p.t]||p.t), date=element('small',p.d.split('-').reverse().join('.')+' · '+(appType(p)?'Приложение':'Вручную'));
+      const amount=element('div',undefined,'ch-payment-amounts'), left=element('div'), right=element('div');
+      left.append(element('small','Пришло'),element('b',money(C.moneyMinor(p.a)),'ch-gross-amount'));
+      right.append(element('small','После комиссии'),element('b',money(C.moneyMinor(p.a)-C.feeMinor(p)),'ch-net-amount')); amount.append(left,right);
+      const fee=element('small','Комиссия '+money(C.feeMinor(p))+(appType(p)?' · 3,8%':p.fee?' · выбрана вручную':p.nc===true?' · без комиссии':' · прежнее правило 3,8%'));
+      const actions=element('div',undefined,'ch-payment-actions');
+      if(!appType(p)){const edit=element('button','Изменить');edit.type='button';edit.addEventListener('click',()=>openForm(p));actions.append(edit);}
+      const remove=element('button','Удалить');remove.type='button';remove.addEventListener('click',()=>archive(p));actions.append(remove);
+      const summary=element('summary'),copy=element('span',undefined,'ch-payment-copy'),value=element('span',undefined,'ch-payment-value'),body=element('div',undefined,'ch-payment-body');
+      copy.append(title,element('small',p.d.split('-').reverse().join('.')+' · Пришло '+money(C.moneyMinor(p.a))));value.append(element('b',money(C.moneyMinor(p.a)-C.feeMinor(p)),'ch-net-amount'),element('small','после комиссии'));summary.append(copy,value);
+      body.append(date,amount,fee);if(p.n)body.append(element('p',p.n));body.append(actions);article.append(summary,body);$('list').append(article);
+    });
+    $('breakdown').replaceChildren();
+    const groups=[['Месячные',pp.filter(p=>p.t==='app-monthly')],['Годовые',pp.filter(p=>p.t==='app-annual')],['Продления',pp.filter(p=>p.t==='app-renewal')],['Личное ведение',pp.filter(p=>category(p)==='coach')],['Другие доходы',pp.filter(p=>category(p)==='extra')]];
+    groups.forEach(([name,list])=>{const t=C.summarize(list),box=element('div',undefined,'ch-type-total'),values=element('div');values.append(element('span','Пришло '+money(t.grossMinor),'ch-gross-amount'),element('b','После комиссии '+money(t.netMinor),'ch-net-amount'));box.append(element('span',name+' · '+t.count),values);$('breakdown').append(box);});
+    $('goal-input').value=goal.amountMinor?C.formatAmountInput(goal.amountMinor):'';$('basis').value=goal.basis;
+    const g=db.months[selected]?.g||{};
+    for(const key of Object.keys(planLabels))document.getElementById('plan-'+key).value=g[key]||0;
+    showQuantityTotal(); applyTheme();if(sync)updateConnection();
+  }
+  function getManualInput() {
+    const kind=$('fee-kind').value;
+    return {type:$('kind').value,date:$('date').value,amount:C.amountInputMinor($('amount').value)/100,feeKind:kind==='app'?'percent':kind,feeValue:kind==='app'?3.8:kind==='none'?0:$('custom-fee').value,n:$('note').value};
+  }
+  function preview() {
+    $('custom-wrap').hidden=!['percent','amount'].includes($('fee-kind').value);
+    try {const p=C.createPayment(getManualInput(),'preview');$('preview').textContent='В доход: '+money(C.moneyMinor(p.a)-C.feeMinor(p))+' · комиссия '+money(C.feeMinor(p));}
+    catch (_) {$('preview').textContent='Введи стоимость и проверь комиссию.';}
+  }
+  function openForm(p) {
+    editing=p?{id:p.id,month:selected,original:clone(p)}:null;dateChosen=!!p;
+    $('date').value=p?p.d:today();if(p&&![...$('kind').options].some(o=>o.value===p.t)){const option=element('option',p.t);option.value=p.t;$('kind').append(option);}$('kind').value=p?p.t:'coaching-month';$('amount').value=p?C.formatAmountInput(C.moneyMinor(p.a)):'';$('note').value=p?p.n||'':'';
+    let kind=p?(p.fee?.kind||(p.nc===true?'none':'app')):(['none','app'].includes(db.settings.manualFeeKind)?db.settings.manualFeeKind:'none');
+    if(kind==='percent'&&Number(p?.fee?.value)===3.8)kind='app';
+    $('fee-kind').value=kind||'none';$('custom-fee').value=p?.fee?.value||0;$('error').textContent='';formVisible(true);preview();$('amount').focus();
+  }
+  async function archive(p) {
+    if(!window.confirm('Убрать эту запись из итогов? Её можно вернуть кнопкой отмены.'))return;
+    try {const next=clone(db),record=next.months[selected].p.find(r=>String(r.id)===String(p.id));if(!record)throw Error('Запись уже изменилась.');record.archivedAt=new Date().toISOString();await commit(next);undo={id:p.id,month:selected};$('undo').hidden=false;notice('Запись убрана из итогов. '+serverSaved());}catch(e){notice(e.message,true);}
+  }
+  function readQuantity() { const g={};for(const key of Object.keys(planLabels)){const value=Number(document.getElementById('plan-'+key).value);if(!Number.isFinite(value)||value<0||(key!=='extra'&&!Number.isInteger(value)))throw Error('Проверь план продаж.');g[key]=value;}return g; }
+  function showQuantityTotal() {try{const next=C.emptyDB();next.months[selected]={p:[],g:readQuantity()};$('quantity-total').textContent='План до комиссии: '+money(C.goalFor(next,selected).amountMinor);}catch(e){$('quantity-total').textContent=e.message;} }
+  function download() {try{const value=sync.exportValue();if(!value)throw Error('Журнал пока не загружен.');const draft=!!sync.pending,blob=new Blob([JSON.stringify(value,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='shirfit-cash-'+(draft?'UNSENT-DRAFT-':'')+today()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice(draft?'Экспортирован неотправленный черновик с исходной версией. Это не подтверждённый сервером журнал.':'Экспортирован загруженный серверный журнал.');}catch(e){notice(e.message,true);} }
+  async function prepareImport(file) {
+    if(!file)return;
+    try {
+      if(file.size>10*1024*1024)throw Error('Файл слишком большой для этого импорта.');
+      const data=JSON.parse(await file.text()), normalized=withIDs(data), replace=$('import-replace').checked;
+      const result=replace?{data:normalized,report:{incoming:C.payments(normalized).length,added:C.payments(normalized).length,skipped:0}}:C.mergeImport(db,normalized);
+      pending={...result,replace,base:JSON.stringify(db)};
+      $('import-summary').textContent=(replace?'Замена текущего журнала. ':'Объединение по ID. ')+'В файле: '+result.report.incoming+' записей; '+(replace?'будет загружено: ':'новых: ')+result.report.added+'; уже есть: '+result.report.skipped+'. Перед применением сохраняется копия текущего учёта.';
+      $('import-preview').hidden=false;notice('Проверь предпросмотр. Данные ещё не изменены.');
+    }catch(e){pending=null;$('import-preview').hidden=true;notice('Импорт не применён: '+e.message+' Если год указан ошибочно, используй исправленный экспорт.',true);}
+  }
+  document.querySelectorAll('[data-sub]').forEach(b=>b.addEventListener('click',()=>sub(b.dataset.sub)));
+  $('edit-goal').addEventListener('click',()=>sub('goals'));
+  $('month-picker').addEventListener('change',()=>{if(/^\d{4}-\d{2}$/.test($('month-picker').value)){selected=$('month-picker').value;render();}});
+  const goalStatus=element('p','','ch-goal-status');goalStatus.id='ch-goal-status';goalStatus.setAttribute('role','status');goalStatus.setAttribute('aria-live','polite');$('goal-form').append(goalStatus);
+  for(const id of ['goal-input','amount'])$(id).addEventListener('blur',()=>{try{if($(id).value.trim())$(id).value=C.formatAmountInput(C.amountInputMinor($(id).value));}catch(_){}});
+  $('goal-form').addEventListener('submit',async e=>{e.preventDefault();goalStatus.textContent='Сохраняем цель на сервере…';goalStatus.classList.remove('ch-error');try{const amount=C.amountInputMinor($('goal-input').value);if(amount<=0)throw Error('Цель должна быть больше нуля.');const next=clone(db);ensureMonth(next,selected).incomeGoal={amount:amount/100,basis:$('basis').value};await commit(next);goalStatus.textContent='Цель сохранена. '+serverSaved();sub('income');notice(goalStatus.textContent);}catch(err){goalStatus.textContent=err.message;goalStatus.classList.add('ch-error');notice(err.message,true);}});
+  $('add').addEventListener('click',()=>openForm());$('manual-back').addEventListener('click',()=>{formVisible(false);editing=null;});
+  $('manual-form').addEventListener('input',preview);$('manual-form').addEventListener('change',preview);$('date').addEventListener('input',()=>{dateChosen=true;});
+  $('manual-form').addEventListener('submit',async e=>{e.preventDefault();try{const id=editing?editing.id:(crypto.randomUUID?crypto.randomUUID():'manual-'+Date.now()+'-'+Math.random().toString(36).slice(2));const p=C.createPayment(getManualInput(),id),next=clone(db),key=p.d.slice(0,7);if(editing){const old=next.months[editing.month].p.find(r=>String(r.id)===String(editing.id));if(!old||JSON.stringify(old)!==JSON.stringify(editing.original))throw Error('Запись изменилась. Открой её заново.');next.months[editing.month].p=next.months[editing.month].p.filter(r=>String(r.id)!==String(editing.id));const preserved={...old,...p};ensureMonth(next,key).p.push(preserved);}else ensureMonth(next,key).p.push(p);const previous=selected;selected=key;try{await commit(next);}catch(err){selected=previous;throw err;}formVisible(false);editing=null;sub('income');notice(serverSaved());}catch(err){$('error').textContent=err.message;}});
+  $('undo').addEventListener('click',async ()=>{if(!undo)return;try{const next=clone(db),p=next.months[undo.month].p.find(r=>String(r.id)===String(undo.id));if(!p)throw Error('Запись не найдена.');delete p.archivedAt;await commit(next);undo=null;$('undo').hidden=true;notice('Запись возвращена. '+serverSaved());}catch(e){notice(e.message,true);}});
+  async function changeSettings(patch){try{const next=clone(db);Object.assign(next.settings,patch);await commit(next);notice(serverSaved());}catch(e){notice(e.message,true);applyTheme();}}
+  $('theme').addEventListener('click',()=>changeSettings({theme:db.settings.theme==='light'?'dark':'light'}));$('theme-setting').addEventListener('change',()=>changeSettings({theme:$('theme-setting').value}));$('manual-default').addEventListener('change',()=>changeSettings({manualFeeKind:$('manual-default').value}));
+  for(const [key,name] of Object.entries(planLabels)){const label=element('label',name),input=element('input');input.id='plan-'+key;input.type='number';input.min='0';input.step=key==='extra'?'0.01':'1';input.value='0';input.addEventListener('input',showQuantityTotal);label.append(input);$('quantity-inputs').append(label);}
+  $('quantity-form').addEventListener('submit',async e=>{e.preventDefault();try{const next=clone(db),m=ensureMonth(next,selected);m.g={...(m.g||{}),...readQuantity()};await commit(next);notice('Планы продаж сохранены. '+serverSaved());}catch(err){notice(err.message,true);}});
+  $('use-quantity-goal').addEventListener('click',async ()=>{try{const next=clone(db),m=ensureMonth(next,selected);m.g={...(m.g||{}),...readQuantity()};const temporary=clone(next);delete temporary.months[selected].incomeGoal;const g=C.goalFor(temporary,selected);if(g.amountMinor<=0)throw Error('Суммарный план пока нулевой.');m.incomeGoal={amount:g.amount,basis:'gross'};await commit(next);sub('income');notice('Сумма планов установлена целью до комиссии. '+serverSaved());}catch(e){notice(e.message,true);}});
+  $('export').addEventListener('click',download);$('import-file').addEventListener('change',()=>prepareImport($('import-file').files[0]));
+  $('import-confirm').addEventListener('click',async ()=>{if(!pending)return;try{if(JSON.stringify(db)!==pending.base)throw Error('Учёт изменился после предпросмотра. Выбери файл ещё раз.');await commit(pending.data,true);pending=null;$('import-preview').hidden=true;$('import-file').value='';formVisible(false);sub('income');notice('Импорт применён. '+serverSaved());}catch(e){notice('Импорт не подтверждён: '+e.message,true);}});
+  $('import-cancel').addEventListener('click',()=>{pending=null;$('import-preview').hidden=true;$('import-file').value='';notice('Импорт отменён.');});
+  $('restore-backup').addEventListener('click',async ()=>{try{const restored=await sync.backup();if(!restored)throw Error('Копия до импорта пока не создана.');if(!window.confirm('Восстановить журнал до последнего импорта? Текущий журнал будет сохранён как обратная копия.'))return;await commit(restored,true);notice('Копия восстановлена. '+serverSaved());}catch(e){notice(e.message,true);}});
+  function refreshDate(){if(!$('manual').hidden&&!editing&&!dateChosen)$('date').value=today();}
+  window.addEventListener('focus',refreshDate);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshDate();});setInterval(refreshDate,60000);
+  async function loadServer(){try{await sync.load();db=withIDs(sync.db);loaded=true;render();updateConnection();notice(serverSaved());}catch(e){notice(e.message,true);updateConnection();}}
+  sync=new window.CashSync({fetch:window.fetch.bind(window),storage:window.cashPreviewStorage,uuid:()=>crypto.randomUUID(),onState:()=>{if(sync)updateConnection();}});
+  $('reload-sync').addEventListener('click',()=>{if(!sync.pending&&!$('manual').hidden&&!window.confirm('Обновить журнал? Несохранённый ввод формы останется на экране.'))return;loadServer();});
+  $('retry-sync').addEventListener('click',async ()=>{try{await sync.retry();db=withIDs(sync.db);loaded=true;render();formVisible(false);editing=null;pending=null;$('import-preview').hidden=true;updateConnection();notice(serverSaved());}catch(e){notice(e.message,true);}});
+  $('draft-export').addEventListener('click',download);
+  $('recovery-resume').addEventListener('click',()=>{try{sync.recover($('recovery-select').value);updateConnection();notice('Черновик восстановлен. Повтори отправку; при конфликте сервер не будет перезаписан.');}catch(e){notice(e.message,true);}});
+  $('recovery-export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({cashRecoveryDrafts:true,drafts:sync.recoveryDrafts()},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='cash-UNSENT-RECOVERY-'+today()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+  $('logout').addEventListener('click',async ()=>{if((sync.pending||sync.recoveryDrafts().length)&&!window.confirm('Есть неотправленные черновики. Сначала экспортируй их. Выйти, сохранив черновики на этом устройстве?'))return;try{await sync.logout();loaded=false;db=C.emptyDB();$('list').replaceChildren();updateConnection();location.assign('/login');}catch(e){notice(e.message,true);}});
+
+  $('use-server').addEventListener('click',async ()=>{if(!window.confirm('Сначала экспортируй неотправленный черновик. Загрузить серверный журнал вместо него? Его локальная копия сохранится на этом устройстве.'))return;try{db=withIDs(await sync.useServerVersion());loaded=true;pending=null;editing=null;$('import-preview').hidden=true;formVisible(false);render();updateConnection();notice('Загружена серверная версия. Черновик не отправлен и сохранён локально как конфликтующая копия.');}catch(e){notice(e.message,true);}});
+  window.addEventListener('online',()=>{if(sync.state==='pending')notice('Связь восстановлена. Нажми «Повторить отправку», чтобы сохранить черновик.');});
+  window.addEventListener('storage',e=>{if(e.key==='shirfit.cash.connected.pending.v1'){sync.state='conflict';updateConnection();notice('Состояние отправки изменилось в другой вкладке. Обнови журнал перед продолжением.',true);}});
+  loadServer();
+})();
+</script></body></html>
