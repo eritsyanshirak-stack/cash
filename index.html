@@ -309,10 +309,15 @@
   let storageOK = true, writesBlocked = false, loadedRaw = null;
   function notice(text, error) { $('notice').textContent = text; $('notice').classList.toggle('ch-error',!!error); }
   function withIDs(input){const n=C.normalize(input),r=C.mergeImport(C.emptyDB(),n).data;return {...n,months:r.months};}
-  function commit(next) {
+  function preflight(next) {
     if(writesBlocked)throw Error('Сохранение заблокировано: сначала нужно восстановить повреждённый журнал. Исходные данные не перезаписаны.');
     if(localStorage.getItem(KEY)!==loadedRaw)throw Error('Данные изменились в другой вкладке. Перезагрузи страницу перед сохранением; текущий ввод не применён.');
     const valid = withIDs(next);
+    C.summarize(C.payments(valid));for(const key of Object.keys(valid.months))C.summarize(C.payments(valid,key));
+    return valid;
+  }
+  function commit(next) {
+    const valid=preflight(next);
     try { localStorage.setItem(KEY,JSON.stringify(valid)); }
     catch (_) { storageOK = false; throw Error('Браузер не смог сохранить данные. Изменение не применено. Проверь свободное место и разрешение хранения.'); }
     db = valid; loadedRaw=JSON.stringify(valid); storageOK = true; render();
@@ -408,9 +413,9 @@
   $('quantity-form').addEventListener('submit',e=>{e.preventDefault();try{const next=clone(db),m=ensureMonth(next,selected);m.g={...(m.g||{}),...readQuantity()};commit(next);notice('Планы продаж сохранены. Прямая денежная цель не заменена.');}catch(err){notice(err.message,true);}});
   $('use-quantity-goal').addEventListener('click',()=>{try{const next=clone(db),m=ensureMonth(next,selected);m.g={...(m.g||{}),...readQuantity()};const temporary=clone(next);delete temporary.months[selected].incomeGoal;const g=C.goalFor(temporary,selected);if(g.amountMinor<=0)throw Error('Суммарный план пока нулевой.');m.incomeGoal={amount:g.amount,basis:'gross'};commit(next);sub('income');notice('Сумма планов установлена целью до комиссии.');}catch(e){notice(e.message,true);}});
   $('export').addEventListener('click',download);$('import-file').addEventListener('change',()=>prepareImport($('import-file').files[0]));
-  $('import-confirm').addEventListener('click',()=>{if(!pending)return;try{if(JSON.stringify(db)!==pending.base)throw Error('Учёт изменился после предпросмотра. Выбери файл ещё раз.');localStorage.setItem(BACKUP,JSON.stringify(db));commit(pending.data);pending=null;$('import-preview').hidden=true;$('import-file').value='';formVisible(false);sub('income');notice('Импорт сохранён. Годы и даты из файла не изменялись. Копия до импорта доступна в настройках.');}catch(e){notice('Импорт не применён: '+e.message,true);}});
+  $('import-confirm').addEventListener('click',()=>{if(!pending)return;try{if(JSON.stringify(db)!==pending.base)throw Error('Учёт изменился после предпросмотра. Выбери файл ещё раз.');preflight(pending.data);const previousBackup=localStorage.getItem(BACKUP);try{localStorage.setItem(BACKUP,JSON.stringify(db));commit(pending.data);}catch(err){try{if(previousBackup===null)localStorage.removeItem(BACKUP);else localStorage.setItem(BACKUP,previousBackup);}catch(_){}throw err;}pending=null;$('import-preview').hidden=true;$('import-file').value='';formVisible(false);sub('income');notice('Импорт сохранён. Годы и даты из файла не изменялись. Копия до импорта доступна в настройках.');}catch(e){notice('Импорт не применён: '+e.message,true);}});
   $('import-cancel').addEventListener('click',()=>{pending=null;$('import-preview').hidden=true;$('import-file').value='';notice('Импорт отменён.');});
-  $('restore-backup').addEventListener('click',()=>{try{const raw=localStorage.getItem(BACKUP);if(!raw)throw Error('Копия до импорта пока не создана.');if(!window.confirm('Восстановить журнал до последнего импорта? Текущий журнал будет сохранён как обратная копия.'))return;const restored=C.normalize(JSON.parse(raw)),current=JSON.stringify(db);localStorage.setItem(BACKUP,current);try{commit(restored);}catch(err){try{localStorage.setItem(BACKUP,raw);}catch(_){}throw err;}notice('Копия восстановлена. Обратная копия сохранена.');}catch(e){notice(e.message,true);}});
+  $('restore-backup').addEventListener('click',()=>{try{const raw=localStorage.getItem(BACKUP);if(!raw)throw Error('Копия до импорта пока не создана.');if(!window.confirm('Восстановить журнал до последнего импорта? Текущий журнал будет сохранён как обратная копия.'))return;const restored=C.normalize(JSON.parse(raw)),current=JSON.stringify(db);preflight(restored);localStorage.setItem(BACKUP,current);try{commit(restored);}catch(err){try{localStorage.setItem(BACKUP,raw);}catch(_){}throw err;}notice('Копия восстановлена. Обратная копия сохранена.');}catch(e){notice(e.message,true);}});
   function refreshDate(){if(!$('manual').hidden&&!editing&&!dateChosen)$('date').value=today();}
   window.addEventListener('focus',refreshDate);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshDate();});setInterval(refreshDate,60000);
   window.addEventListener('storage',e=>{if(e.key===KEY&&e.newValue){if(!$('manual').hidden){notice('Данные изменились в другой вкладке. Закрой форму и перезагрузи страницу перед сохранением.',true);return;}try{db=withIDs(JSON.parse(e.newValue));loadedRaw=e.newValue;render();notice('Журнал обновлён из другой вкладки.');}catch(_){notice('Изменения другой вкладки не удалось прочитать.',true);}}});
